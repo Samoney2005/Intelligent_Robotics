@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.8)
+project(my_package)
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+# Generate Interfaces (from Section 6)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Num.msg"
+  "srv/AddThreeInts.srv"
+)
+
+# Parameter Node (Section 8)
+add_executable(minimal_param_node src/cpp_parameters_node.cpp)
+ament_target_dependencies(minimal_param_node rclcpp)
+
+install(TARGETS
+  minimal_param_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
